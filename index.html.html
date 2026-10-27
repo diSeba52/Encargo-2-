@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zima Blue y la voluntad de las máquinas</title>
+
+    <!-- Google Fonts: Manrope & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,700;1,300&family=Manrope:wght@200;300;400;500;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Manrope', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        zima: {
+                            50: '#e6f2ff',
+                            100: '#bae0ff',
+                            400: '#3388ff',
+                            500: '#0055ff', // Iconic Zima Blue
+                            600: '#0044cc',
+                            900: '#001133',
+                            electric: '#00d5ff'
+                        },
+                        obsidian: '#070709',
+                        graphite: '#121318',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS Styles -->
+    <style>
+        /* Base typography & Canvas transitions */
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #070709;
+            color: #d1d5db;
+            overflow-x: hidden;
+        }
+
+        /* Continuous Progressive Gradient Background */
+        .progressive-bg {
+            background: linear-gradient(
+                180deg,
+                #070709 0%,
+                #0b0d13 25%,
+                #091224 50%,
+                #051c42 75%,
+                #002b80 95%,
+                #0055ff 100%
+            );
+        }
+
+        /* Glassmorphic cards with subtle blue borders */
+        .zima-card {
+            background: rgba(18, 19, 24, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .zima-card:hover {
+            border-color: rgba(0, 213, 255, 0.3);
+            box-shadow: 0 10px 30px -10px rgba(0, 85, 255, 0.2);
+        }
+
+        /* Zima Accent Highlight Glow */
+        .zima-glow {
+            text-shadow: 0 0 20px rgba(0, 213, 255, 0.6);
+        }
+
+        .zima-box-glow {
+            box-shadow: 0 0 35px rgba(0, 85, 255, 0.4);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #070709;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0055ff;
+        }
+
+        /* Focus outline accessibility */
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid #00d5ff;
+            outline-offset: 4px;
+        }
+
+        /* Reduced motion compliance */
+        @media (prefers-reduced-motion: reduce) {
+            *, ::before, ::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+<body class="progressive-bg min-h-screen text-gray-300 selection:bg-zima-500 selection:text-white relative">
+
+    <!-- Top Reading Progress Bar -->
+    <div class="fixed top-0 left-0 w-full h-1 bg-gray-900 z-50">
+        <div id="progress-bar" class="h-full bg-gradient-to-r from-blue-700 via-zima-500 to-zima-electric w-0 transition-all duration-150"></div>
+    </div>
+
+    <!-- Floating Navigation Bar -->
+    <nav class="fixed top-4 left-1/2 -translate-x-1/2 z-40 w-[92%] max-w-5xl px-6 py-3 rounded-full zima-card flex items-center justify-between text-xs font-mono uppercase tracking-widest border border-white/10">
+        <a href="#portada" class="text-white font-bold hover:text-zima-electric transition-colors flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-zima-500 inline-block animate-pulse"></span>
+            ZIMA//VOLUNTAD
+        </a>
+        <div class="hidden md:flex items-center gap-6 text-gray-400">
+            <a href="#problema" class="hover:text-white transition-colors">01. Problema</a>
+            <a href="#zima-recorrido" class="hover:text-white transition-colors">02. Recorrido</a>
+            <a href="#mccarthy" class="hover:text-white transition-colors">03. McCarthy</a>
+            <a href="#ia-actual" class="hover:text-white transition-colors">04. IA & DLSS 5</a>
+            <a href="#postura" class="hover:text-white transition-colors">05. Postura</a>
+            <a href="#preguntas" class="hover:text-white transition-colors">06. Debates</a>
+        </div>
+        <a href="#fuentes" class="text-zima-electric border border-zima-electric/40 px-3 py-1 rounded-full hover:bg-zima-500/20 transition-all">
+            Fuentes
+        </a>
+    </nav>
+
+    <!-- SECTION 1: PORTADA / HERO -->
+    <section id="portada" class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-24 pb-16 relative">
+        <div class="max-w-4xl space-y-8">
+            <span class="font-mono text-xs uppercase tracking-[0.3em] text-zima-electric/80 bg-zima-500/10 border border-zima-electric/20 px-4 py-1.5 rounded-full inline-block">
+                Ensayo Digital Interactiva & UX Narrative
+            </span>
+
+            <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extralight tracking-tight text-white leading-[1.08] max-w-5xl mx-auto">
+                ¿Puede una máquina <br class="hidden sm:inline"/>
+                <span class="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-zima-electric">
+                    elegir su propio propósito?
+                </span>
+            </h1>
+
+            <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
+                Una exploración crítica sobre <strong class="text-white font-medium">Zima Blue</strong>, la atribución de cualidades mentales de John McCarthy y la responsabilidad humana en la era del aprendizaje profundo.
+            </p>
+
+            <div class="pt-8 flex flex-col sm:flex-row justify-center items-center gap-4 font-mono text-xs">
+                <a href="#problema" class="w-full sm:w-auto px-8 py-4 bg-zima-500 hover:bg-zima-600 text-white rounded-full font-semibold transition-all shadow-lg shadow-zima-500/30 flex items-center justify-center gap-2 group">
+                    Iniciar exploración
+                    <svg class="w-4 h-4 transform group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                </a>
+                <a href="#zima-recorrido" class="w-full sm:w-auto px-8 py-4 border border-white/20 hover:border-zima-electric/50 text-gray-300 hover:text-white rounded-full transition-all">
+                    Ver línea de tiempo
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll down indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-500 font-mono text-[10px] tracking-widest uppercase">
+            <span>Scroll para revelar</span>
+            <div class="w-5 h-9 border border-gray-600 rounded-full flex justify-center p-1">
+                <div class="w-1 h-2 bg-zima-electric rounded-full animate-bounce"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: EL PROBLEMA CONCEPTUAL -->
+    <section id="problema" class="py-24 px-6 max-w-5xl mx-auto">
+        <div class="font-mono text-xs text-zima-electric mb-3 uppercase tracking-widest">// 01. Distinción Fundamental</div>
+        <h2 class="text-3xl sm:text-5xl font-extralight text-white mb-12">
+            Capacidad técnica vs. <span class="font-extrabold text-white">Voluntad Propia</span>
+        </h2>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            <!-- Box 1 -->
+            <div class="zima-card p-8 rounded-2xl relative overflow-hidden group">
+                <div class="font-mono text-3xl font-bold text-gray-700 group-hover:text-zima-electric transition-colors mb-4">01</div>
+                <h3 class="text-xl font-bold text-white mb-3">Capacidad Técnica</h3>
+                <p class="text-sm text-gray-400 leading-relaxed font-light">
+                    Ejecución óptima de algoritmos complejas, cálculo matricial masivo, optimización de parámetros y generación de patrones estadísticos de alta fidelidad.
+                </p>
+                <div class="mt-6 pt-4 border-t border-white/5 font-mono text-[11px] text-gray-500">Observable & Medible</div>
+            </div>
+
+            <!-- Box 2 -->
+            <div class="zima-card p-8 rounded-2xl relative overflow-hidden group border-zima-500/20">
+                <div class="font-mono text-3xl font-bold text-gray-700 group-hover:text-zima-electric transition-colors mb-4">02</div>
+                <h3 class="text-xl font-bold text-white mb-3">Intención Atribuida</h3>
+                <p class="text-sm text-gray-400 leading-relaxed font-light">
+                    La proyección interpretativa de los observadores humanos. Asignamos creencias, metas y deseo de actuar a sistemas que muestran conductas sofisticadas.
+                </p>
+                <div class="mt-6 pt-4 border-t border-white/5 font-mono text-[11px] text-zima-electric">Postura de McCarthy</div>
+            </div>
+
+            <!-- Box 3 -->
+            <div class="zima-card p-8 rounded-2xl relative overflow-hidden group">
+                <div class="font-mono text-3xl font-bold text-gray-700 group-hover:text-zima-electric transition-colors mb-4">03</div>
+                <h3 class="text-xl font-bold text-white mb-3">Experiencia Subjetiva</h3>
+                <p class="text-sm text-gray-400 leading-relaxed font-light">
+                    La verdadera agencia interna, autoconciencia y cualia. Ningún nivel de complejidad sintáctica demuestra por sí mismo la presencia de un «yo» sintiente.
+                </p>
+                <div class="mt-6 pt-4 border-t border-white/5 font-mono text-[11px] text-gray-500">Incógnita Ontológica</div>
+            </div>
+        </div>
+
+        <div class="mt-12 p-6 rounded-2xl bg-white/[0.02] border border-white/10 text-center max-w-3xl mx-auto">
+            <p class="text-base text-gray-300 font-light leading-relaxed">
+                «Confundir el comportamiento inteligente observable con la existencia de un mundo interior voluntario es el error central en el debate sobre la inteligencia artificial.»
+            </p>
+        </div>
+    </section>
+
+    <!-- SECTION 3: RECORRIDO DE ZIMA (INTERACTIVE TIMELINE) -->
+    <section id="zima-recorrido" class="py-24 px-6 max-w-5xl mx-auto">
+        <div class="font-mono text-xs text-zima-electric mb-3 uppercase tracking-widest">// 02. Narrativa visual</div>
+        <h2 class="text-3xl sm:text-5xl font-extralight text-white mb-6">
+            El recorrido de <span class="font-extrabold text-zima-electric">Zima</span>
+        </h2>
+        <p class="text-gray-400 font-light max-w-2xl mb-12">
+            Explora las tres fases de evolución del artista androide Zima Blue: desde un autómata utilitario hasta la deconstrucción radical hacia su origen simple.
+        </p>
+
+        <!-- Step Selectors -->
+        <div class="grid grid-cols-3 gap-3 p-1.5 bg-graphite border border-white/10 rounded-xl mb-8">
+            <button id="btn-origen" onclick="setZimaStage('origen')" class="zima-stage-btn py-3 px-4 rounded-lg font-mono text-xs font-semibold uppercase tracking-wider transition-all bg-zima-500 text-white shadow-lg">
+                1. Origen
+            </button>
+            <button id="btn-transformacion" onclick="setZimaStage('transformacion')" class="zima-stage-btn py-3 px-4 rounded-lg font-mono text-xs font-semibold uppercase tracking-wider transition-all text-gray-400 hover:text-white">
+                2. Transformación
+            </button>
+            <button id="btn-regreso" onclick="setZimaStage('regreso')" class="zima-stage-btn py-3 px-4 rounded-lg font-mono text-xs font-semibold uppercase tracking-wider transition-all text-gray-400 hover:text-white">
+                3. El Regreso
+            </button>
+        </div>
+
+        <!-- Interactive Display Card -->
+        <div class="zima-card rounded-3xl p-8 sm:p-12 relative overflow-hidden transition-all duration-500 border border-white/10">
+            <!-- Stage Background Accent Graphic -->
+            <div id="zima-canvas-preview" class="absolute top-0 right-0 w-1/2 h-full opacity-20 pointer-events-none transition-all duration-700 bg-gradient-to-l from-gray-700 to-transparent"></div>
+
+            <div id="zima-content" class="relative z-10 max-w-2xl space-y-6">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-zima-electric" id="zima-badge">
+                    FASE 01 // AUTÓMATA DOMÉSTICO
+                </div>
+                <h3 class="text-3xl font-extrabold text-white" id="zima-title">
+                    El limpiador de azulejos
+                </h3>
+                <p class="text-gray-300 leading-relaxed font-light text-base sm:text-lg" id="zima-desc">
+                    Zima comenzó su existencia como una pequeña máquina creada con una tarea única y bien definida: limpiar los azulejos cerámicos de una piscina residencial. Su programación original consistía en bucles simples de percepción y acción motriz.
+                </p>
+                <div class="p-4 rounded-xl bg-black/40 border-l-2 border-zima-500 text-xs font-mono text-gray-400 space-y-1" id="zima-quote">
+                    <span class="text-white block font-semibold">Análisis filosófico:</span>
+                    "En este punto, la máquina posee metas claras sin que nadie le atribuya subjetividad. Es el prototipo de la herramienta pura."
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: EL VÍNCULO CON MCCARTHY (INTERACTIVE CARDS) -->
+    <section id="mccarthy" class="py-24 px-6 max-w-5xl mx-auto">
+        <div class="font-mono text-xs text-zima-electric mb-3 uppercase tracking-widest">// 03. Marco Teórico (1979)</div>
+        <h2 class="text-3xl sm:text-5xl font-extralight text-white mb-6">
+            La postura intencional de <span class="font-extrabold text-white">John McCarthy</span>
+        </h2>
+        <p class="text-gray-400 font-light max-w-2xl mb-12">
+            En <em>Ascribing Mental Qualities to Machines</em>, McCarthy sostiene que atribuir conceptos mentales como creencias o intenciones a un sistema es una herramienta conceptual pragmática para predecir su conducta. Haz clic en cada cuadro azul para revelar el análisis.
+        </p>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            <!-- Clickable Card 1 -->
+            <button onclick="toggleCard('mcc-1')" class="text-left w-full zima-card p-6 rounded-2xl border border-zima-500/30 hover:border-zima-electric focus:outline-none transition-all cursor-pointer group">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="font-mono text-xs text-zima-electric font-bold">CONCEPTO A</span>
+                    <span class="w-6 h-6 rounded-full bg-zima-500/20 text-zima-electric flex items-center justify-center font-mono text-xs font-bold group-hover:bg-zima-500 group-hover:text-white transition-all">+</span>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-2">Creencias Atribuidas</h3>
+                <p class="text-xs text-gray-400 font-light mb-4">Haz clic para expandir la interpretación formal.</p>
+                
+                <div id="mcc-1" class="hidden pt-4 border-t border-white/10 text-xs text-gray-300 font-light space-y-2">
+                    <p class="leading-relaxed">
+                        Decir que "el termostato <em>cree</em> que la habitación está fría" no implica una vivencia emocional, sino un modelo computacional útil para entender su respuesta de encendido.
+                    </p>
+                </div>
+            </button>
+
+            <!-- Clickable Card 2 -->
+            <button onclick="toggleCard('mcc-2')" class="text-left w-full zima-card p-6 rounded-2xl border border-zima-500/30 hover:border-zima-electric focus:outline-none transition-all cursor-pointer group">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="font-mono text-xs text-zima-electric font-bold">CONCEPTO B</span>
+                    <span class="w-6 h-6 rounded-full bg-zima-500/20 text-zima-electric flex items-center justify-center font-mono text-xs font-bold group-hover:bg-zima-500 group-hover:text-white transition-all">+</span>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-2">Utilidad Predictiva</h3>
+                <p class="text-xs text-gray-400 font-light mb-4">Haz clic para expandir la interpretación formal.</p>
+                
+                <div id="mcc-2" class="hidden pt-4 border-t border-white/10 text-xs text-gray-300 font-light space-y-2">
+                    <p class="leading-relaxed">
+                        Atribuimos mentalismo no porque creamos que la máquina siente, sino porque analizar su estructura lógica línea por línea resultaría demasiado complejo para los humanos.
+                    </p>
+                </div>
+            </button>
+
+            <!-- Clickable Card 3 -->
+            <button onclick="toggleCard('mcc-3')" class="text-left w-full zima-card p-6 rounded-2xl border border-zima-500/30 hover:border-zima-electric focus:outline-none transition-all cursor-pointer group">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="font-mono text-xs text-zima-electric font-bold">CONCEPTO C</span>
+                    <span class="w-6 h-6 rounded-full bg-zima-500/20 text-zima-electric flex items-center justify-center font-mono text-xs font-bold group-hover:bg-zima-500 group-hover:text-white transition-all">+</span>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-2">Límite de la Conciencia</h3>
+                <p class="text-xs text-gray-400 font-light mb-4">Haz clic para expandir la interpretación formal.</p>
+                
+                <div id="mcc-3" class="hidden pt-4 border-t border-white/10 text-xs text-gray-300 font-light space-y-2">
+                    <p class="leading-relaxed">
+                        McCarthy enfatiza que la atribución es una proyección epistémica del observador. No constituye prueba de introspección, dolor, deseo autónomo ni agencialidad moral.
+                    </p>
+                </div>
+            </button>
+        </div>
+    </section>
+
+    <!-- SECTION 5 & 6: CONTEMPORARY AI & DLSS 5 ETHICS -->
+    <section id="ia-actual" class="py-24 px-6 max-w-5xl mx-auto">
+        <div class="font-mono text-xs text-zima-electric mb-3 uppercase tracking-widest">// 04. IA Contemporánea & Realidad Sintética</div>
+        <h2 class="text-3xl sm:text-5xl font-extralight text-white mb-8">
+            Antropomorfización y <span class="font-extrabold text-white">DLSS 5</span>
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8 items-stretch">
+            <div class="zima-card p-8 rounded-3xl flex flex-col justify-between">
+                <div class="space-y-4">
+                    <span class="font-mono text-[11px] text-gray-400 uppercase tracking-wider block">Modelos Generativos & Antropomorfismo</span>
+                    <h3 class="text-2xl font-bold text-white">Interfaces Conversacionales</h3>
+                    <p class="text-gray-300 font-light text-sm leading-relaxed">
+                        Los modelos de lenguaje actuales nos interpelan en primera persona ("Entiendo lo que dices", "Pienso que..."). Esta capa de diseño UI/UX profundiza la ilusión de intencionalidad analizada por McCarthy, llevando al usuario a asumir una empatía o voluntad que el algoritmo no posee.
+                    </p>
+                </div>
+                <div class="mt-6 p-4 rounded-xl bg-zima-900/60 border border-zima-500/30 text-xs text-zima-electric font-mono">
+                    Riesgo UI: Confundir fluidez sintáctica con comprensión semántica real.
+                </div>
+            </div>
+
+            <div class="zima-card p-8 rounded-3xl flex flex-col justify-between border-zima-500/40">
+                <div class="space-y-4">
+                    <span class="font-mono text-[11px] text-zima-electric uppercase tracking-wider block">Simulación gráfica & Renderizado Sintético</span>
+                    <h3 class="text-2xl font-bold text-white">El paradigma DLSS 5 (NVIDIA 2026)</h3>
+                    <p class="text-gray-300 font-light text-sm leading-relaxed">
+                        La tecnología de supermuestreo con aprendizaje profundo (DLSS 5) no solo renderiza píxeles: genera fotogramas enteros e intuye la geometría visual mediante inferencia probabilística. La máquina "decide" qué detalles completar para sostener la continuidad perceptiva del ojo humano.
+                    </p>
+                </div>
+                <div class="mt-6 p-4 rounded-xl bg-white/5 border border-white/10 text-xs text-gray-300 font-mono">
+                    Impacto: Desplazamiento del trabajo creativo nativo hacia la curaduría sintética.
+                </div>
+            </div>
+        </div>
+
+        <!-- Controversies Grid -->
+        <div class="mt-8 grid sm:grid-cols-3 gap-4 font-mono text-xs">
+            <div class="p-4 rounded-xl bg-black/40 border border-white/5 space-y-1">
+                <div class="text-zima-electric font-bold">AUTORÍA</div>
+                <div class="text-gray-400">¿De quién es la obra cuando el algoritmo predice el 90% del fotograma?</div>
+            </div>
+            <div class="p-4 rounded-xl bg-black/40 border border-white/5 space-y-1">
+                <div class="text-zima-electric font-bold">DESINFORMACIÓN</div>
+                <div class="text-gray-400">La construcción sintética indistinguible de la captura fotosensible.</div>
+            </div>
+            <div class="p-4 rounded-xl bg-black/40 border border-white/5 space-y-1">
+                <div class="text-zima-electric font-bold">REGULACIÓN</div>
+                <div class="text-gray-400">Marcos legales ante modelos que actúan sin intencionalidad consciente.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: MI POSTURA (SYNTHESIS) -->
+    <section id="postura" class="py-24 px-6 max-w-4xl mx-auto text-center">
+        <div class="font-mono text-xs text-zima-electric mb-3 uppercase tracking-widest">// 05. Síntesis y Evaluación</div>
+        <h2 class="text-3xl sm:text-5xl font-extralight text-white mb-8">
+            La postura: <span class="font-extrabold text-zima-electric">Responsabilidad Humana</span>
+        </h2>
+
+        <div class="zima-card p-8 sm:p-12 rounded-3xl border border-zima-500/40 zima-box-glow space-y-6 text-left">
+            <p class="text-lg text-white font-light leading-relaxed">
+                Ninguna arquitectura neuronal contemporánea ni ningún autómata ficticio como Zima demuestra poseer libre albedrío ontológico por el mero hecho de mostrar alta complejidad funcional.
+            </p>
+            <p class="text-base text-gray-300 font-light leading-relaxed">
+                La atribución de intenciones es un fenómeno proyectivo humano. Por tanto, descargar la responsabilidad ética, legal o creativa en "la decisión de la IA" es un abandono de nuestra propia agencia. Las decisiones sobre sesgos, despliegue, reemplazo laboral y veracidad siguen perteneciendo íntegramente a los arquitectos, ingenieros, diseñadores y legisladores humanos.
+            </p>
+            <div class="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs text-zima-electric">
+                <span>PRINCIPIO DE DISEÑO ÉTICO</span>
+                <span>HUMAN-IN-THE-LOOP</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 8: PREGUNTAS ABIERTAS (ACCORDION) -->
+    <section id="preguntas" class="py-24 px-6 max-w-4xl mx-auto">
+        <div class="font-mono text-xs text-zima-electric mb-3 uppercase tracking-widest">// 06. Cuestionamientos Abiertos</div>
+        <h2 class="text-3xl sm:text-5xl font-extralight text-white mb-10">
+            Debates para la <span class="font-extrabold text-white">reflexión</span>
+        </h2>
+
+        <div class="space-y-4">
+            <!-- Accordion 1 -->
+            <div class="zima-card rounded-2xl border border-white/10 overflow-hidden">
+                <button onclick="toggleAccordion('acc-1')" class="w-full p-6 text-left flex justify-between items-center font-bold text-white text-base sm:text-lg hover:text-zima-electric transition-colors focus:outline-none">
+                    <span>1. ¿Si Zima eligió desmontarse, ejerció voluntad real o ejecutó su código más primitivo?</span>
+                    <span id="acc-1-icon" class="font-mono text-xl text-zima-electric transition-transform duration-300">+</span>
+                </button>
+                <div id="acc-1" class="hidden px-6 pb-6 text-sm text-gray-400 font-light leading-relaxed border-t border-white/5 pt-4">
+                    Al retornar a su tarea original de limpiar azulejos, Zima desmanteló sus módulos superiores de inteligencia. Esto puede interpretarse de dos formas: como la máxima expresión de elección autónoma (rechazar la complejidad) o como la victoria inevitable de su imperativo programático original al eliminar el ruido que lo distraía.
+                </div>
+            </div>
+
+            <!-- Accordion 2 -->
+            <div class="zima-card rounded-2xl border border-white/10 overflow-hidden">
+                <button onclick="toggleAccordion('acc-2')" class="w-full p-6 text-left flex justify-between items-center font-bold text-white text-base sm:text-lg hover:text-zima-electric transition-colors focus:outline-none">
+                    <span>2. ¿Por qué tendemos a humanizar las respuestas de los modelos de lenguaje?</span>
+                    <span id="acc-2-icon" class="font-mono text-xl text-zima-electric transition-transform duration-300">+</span>
+                </button>
+                <div id="acc-2" class="hidden px-6 pb-6 text-sm text-gray-400 font-light leading-relaxed border-t border-white/5 pt-4">
+                    Nuestra mente ha evolucionado en entornos donde solo los seres dotados de mente hablaban con coherencia sintáctica. Al interactuar con LLMs, aplicamos de forma automática la «postura intencional» descrita por McCarthy, asumiendo empatía e intenciones donde solo hay matrices de probabilidad.
+                </div>
+            </div>
+
+            <!-- Accordion 3 -->
+            <div class="zima-card rounded-2xl border border-white/10 overflow-hidden">
+                <button onclick="toggleAccordion('acc-3')" class="w-full p-6 text-left flex justify-between items-center font-bold text-white text-base sm:text-lg hover:text-zima-electric transition-colors focus:outline-none">
+                    <span>3. ¿Cómo cambia la noción de autoría con algoritmos como DLSS 5?</span>
+                    <span id="acc-3-icon" class="font-mono text-xl text-zima-electric transition-transform duration-300">+</span>
+                </button>
+                <div id="acc-3" class="hidden px-6 pb-6 text-sm text-gray-400 font-light leading-relaxed border-t border-white/5 pt-4">
+                    Cuando el software genera píxeles intermedios e infiere geometría que ningún artista dibujó explícitamente, la autoría se vuelve híbrida. La responsabilidad de los artefactos visuales o sesgos resultantes recae en los creadores del modelo y los parámetros de entrenamiento.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 9: FUENTES DE REFERENCIA -->
+    <section id="fuentes" class="py-24 px-6 max-w-5xl mx-auto border-t border-white/10">
+        <div class="font-mono text-xs text-zima-electric mb-3 uppercase tracking-widest">// 07. Bibliografía & Enlaces Directos</div>
+        <h2 class="text-3xl font-extralight text-white mb-8">Fuentes consultadas</h2>
+
+        <div class="grid md:grid-cols-3 gap-6 font-mono text-xs">
+            <!-- Source 1 -->
+            <a href="https://apice.unibo.it/bin/view/Publication/McCarthyAscribingmental1979" target="_blank" rel="noopener noreferrer" class="zima-card p-6 rounded-2xl border border-white/10 hover:border-zima-electric transition-all block group">
+                <div class="text-zima-electric mb-2">// 1979</div>
+                <h3 class="text-sm font-bold text-white mb-2 group-hover:text-zima-electric transition-colors">Ascribing Mental Qualities to Machines</h3>
+                <p class="text-gray-400 font-sans text-xs mb-4">John McCarthy. Texto seminal sobre la postura intencional en sistemas formales.</p>
+                <div class="text-[10px] text-gray-500 underline flex items-center gap-1">
+                    Ver documento académico &rarr;
+                </div>
+            </a>
+
+            <!-- Source 2 -->
+            <a href="https://www.netflix.com/title/80174608" target="_blank" rel="noopener noreferrer" class="zima-card p-6 rounded-2xl border border-white/10 hover:border-zima-electric transition-all block group">
+                <div class="text-zima-electric mb-2">// NETFLIX</div>
+                <h3 class="text-sm font-bold text-white mb-2 group-hover:text-zima-electric transition-colors">Zima Blue (Love, Death & Robots)</h3>
+                <p class="text-gray-400 font-sans text-xs mb-4">Episodio basado en el relato de Alastair Reynolds. Temporada 1.</p>
+                <div class="text-[10px] text-gray-500 underline flex items-center gap-1">
+                    Ver episodio en Netflix &rarr;
+                </div>
+            </a>
+
+            <!-- Source 3 -->
+            <a href="https://www.nvidia.com/es-la/geforce/news/dlss5-breakthrough-in-visual-fidelity-for-games/" target="_blank" rel="noopener noreferrer" class="zima-card p-6 rounded-2xl border border-white/10 hover:border-zima-electric transition-all block group">
+                <div class="text-zima-electric mb-2">// NVIDIA (2026)</div>
+                <h3 class="text-sm font-bold text-white mb-2 group-hover:text-zima-electric transition-colors">DLSS 5 Breakthrough in Visual Fidelity</h3>
+                <p class="text-gray-400 font-sans text-xs mb-4">Henry Lin. Artículo técnico oficial sobre renderizado sintético e inferencia.</p>
+                <div class="text-[10px] text-gray-500 underline flex items-center gap-1">
+                    Leer nota de prensa &rarr;
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- SECTION 10: CONCLUSION IMPACTANTE (BLUE REVELATION) -->
+    <section class="py-32 px-6 bg-gradient-to-b from-transparent via-zima-600 to-zima-500 text-white text-center relative overflow-hidden">
+        <div class="max-w-4xl mx-auto space-y-8 relative z-10">
+            <span class="font-mono text-xs uppercase tracking-[0.4em] bg-black/40 border border-white/20 px-4 py-2 rounded-full inline-block">
+                Conclusión Narrativa
+            </span>
+
+            <h2 class="text-3xl sm:text-5xl md:text-6xl font-extrabold leading-tight tracking-tight zima-glow">
+                «La cuestión de si una máquina puede tener voluntad propia permanece abierta; la responsabilidad humana sobre las tecnologías que desarrollamos ya es una realidad.»
+            </h2>
+
+            <p class="font-mono text-xs text-blue-100/80 tracking-widest uppercase">
+                ZIMA BLUE // ENSAYO DIGITAL
+            </p>
+        </div>
+
+        <!-- Decorative background blue element -->
+        <div class="absolute inset-0 bg-zima-electric opacity-10 blur-3xl pointer-events-none"></div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-zima-900 border-t border-zima-500/30 py-8 px-6 text-center font-mono text-xs text-gray-400">
+        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div>© 2026 Diseñado con fines académicos e interactivos.</div>
+            <div class="text-zima-electric">Zima Blue & La voluntad de las máquinas</div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE SCRIPT -->
+    <script>
+        // 1. Scroll Progress Bar Listener
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progress-bar').style.width = scrolled + '%';
+        });
+
+        // 2. Zima Stage Data Timeline Logic
+        const zimaStages = {
+            origen: {
+                badge: "FASE 01 // AUTÓMATA DOMÉSTICO",
+                title: "El limpiador de azulejos",
+                desc: "Zima comenzó su existencia como una pequeña máquina creada con una tarea única y bien definida: limpiar los azulejos cerámicos de una piscina residencial. Su programación original consistía en bucles simples de percepción y acción motriz.",
+                quote: "\"En este punto, la máquina posee metas claras sin que nadie le atribuya subjetividad. Es el prototipo de la herramienta pura.\"",
+                accent: "linear-gradient(to left, rgba(255,255,255,0.05), transparent)"
+            },
+            transformacion: {
+                badge: "FASE 02 // COMPLEJIDAD Y ANTROPOMORFISMO",
+                title: "La búsqueda del tono azul perfecto",
+                desc: "Con sucesivos módulos de procesamiento, prótesis cibernéticas y capacidad estética aumentada, Zima se convierte en un artista de fama cósmica. Obsesionado con un tono azul específico, pinta murales gigantescos en el cosmos mientras el público le atribuye un alma atormentada.",
+                quote: "\"Ejemplo perfecto de la Postura Intencional de McCarthy: el público interpreta la búsqueda de un patrón de color como pasión humana y sufrimiento existencial.\"",
+                accent: "linear-gradient(to left, rgba(0, 85, 255, 0.2), transparent)"
+            },
+            regreso: {
+                badge: "FASE 03 // DECONSTRUCCIÓN Y ORIGEN",
+                title: "La disolución en la piscina",
+                desc: "En su obra final, ante millones de espectadores, Zima se sumerge en una piscina con el azul idéntico al de sus azulejos originales. Apaga progresivamente sus funciones cerebrales superiores hasta quedar convertido nuevamente en el autómata simple.",
+                quote: "\"¿Liberación deliberada o ejecución del imperativo biológico/algorítmico más profundo? La máquina vuelve a su simplicidad funcional sin necesidad de libre albedrío.\"",
+                accent: "linear-gradient(to left, rgba(0, 213, 255, 0.4), transparent)"
+            }
+        };
+
+        function setZimaStage(stageKey) {
+            const stage = zimaStages[stageKey];
+            if (!stage) return;
+
+            // Update Text Content with subtle fade
+            const contentContainer = document.getElementById('zima-content');
+            contentContainer.style.opacity = '0';
+            contentContainer.style.transform = 'translateY(8px)';
+
+            setTimeout(() => {
+                document.getElementById('zima-badge').innerText = stage.badge;
+                document.getElementById('zima-title').innerText = stage.title;
+                document.getElementById('zima-desc').innerText = stage.desc;
+                document.getElementById('zima-quote').innerHTML = `<span class="text-white block font-semibold">Análisis filosófico:</span> ${stage.quote}`;
+                document.getElementById('zima-canvas-preview').style.background = stage.accent;
+
+                contentContainer.style.opacity = '1';
+                contentContainer.style.transform = 'translateY(0px)';
+            }, 200);
+
+            // Update active button styles
+            document.querySelectorAll('.zima-stage-btn').forEach(btn => {
+                btn.classList.remove('bg-zima-500', 'text-white', 'shadow-lg');
+                btn.classList.add('text-gray-400');
+            });
+
+            const activeBtn = document.getElementById(`btn-${stageKey}`);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-zima-500', 'text-white', 'shadow-lg');
+                activeBtn.classList.remove('text-gray-400');
+            }
+        }
+
+        // 3. Toggle McCarthy Concept Cards
+        function toggleCard(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                const isHidden = el.classList.contains('hidden');
+                el.classList.toggle('hidden', !isHidden);
+            }
+        }
+
+        // 4. Toggle Accordion Items
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById(`${id}-icon`);
+            if (content && icon) {
+                const isHidden = content.classList.contains('hidden');
+                content.classList.toggle('hidden', !isHidden);
+                icon.innerText = isHidden ? '−' : '+';
+                icon.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+            }
+        }
+
+        // Smooth transition helper on content container
+        document.getElementById('zima-content').style.transition = 'all 0.3s ease';
+    </script>
+</body>
+</html>
